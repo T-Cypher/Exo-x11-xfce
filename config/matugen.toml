@@ -1,0 +1,37 @@
+# Exo for XFCE — matugen configuration.
+#
+# Copy this over ~/.config/matugen/config.toml (or merge the block into your
+# existing file), then run:
+#
+#     matugen image /path/to/wallpaper.jpg
+#
+# and the shell picks the palette up immediately (Theme.qml watches the file).
+#
+# The shell reads ~/.cache/quickshell-exo/colors.json for the dark palette and
+# ~/.cache/quickshell-exo/colors-light.json for the light one; if they do not
+# exist the built-in Material 3 palettes are used.
+
+[templates.exo]
+input_path = '~/.config/matugen/templates/exo-colors.json'
+output_path = '~/.cache/quickshell-exo/colors.json'
+
+# Optional: a fixed light scheme for when Settings → Appearance is switched to
+# "Light". matugen regenerates the dark file on every wallpaper change.
+#
+# [templates.exo-light]
+# input_path = '~/.config/matugen/templates/exo-colors.json'
+# output_path = '~/.cache/quickshell-exo/colors-light.json'
+
+# ---------------------------------------------------------------------------
+# Optional extras, the same ones Exo themes on Wayland:
+#
+# [templates.gtk3]
+# input_path = '~/.config/matugen/templates/gtk-colors.css'
+# output_path = '~/.config/gtk-3.0/colors.css'
+#
+# [templates.gtk4]
+# input_path = '~/.config/matugen/templates/gtk-colors.css'
+# output_path = '~/.config/gtk-4.0/colors.css'
+#
+# The XFCE GTK theme can be pointed at the generated colours with:
+#   xfconf-query -c xsettings -p /Net/ThemeName -s "adw-gtk3"

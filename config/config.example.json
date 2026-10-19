@@ -1,0 +1,101 @@
+// Exo for XFCE — configuration reference.
+//
+// This file documents every setting. The shell keeps its live configuration in
+// `<shell dir>/config.json` (created with these defaults on first start) and
+// writes to it whenever you change something in the settings window, so you can
+// also edit it by hand and press "Reload shell" in Settings → About.
+//
+// Copy this file over config.json to start from scratch.
+{
+    // ------------------------------------------------------------------- bar
+    // Where the bar sits: "top", "bottom", "left" or "right".
+    "barPosition": "top",
+    // Draw the bar as a detached floating pill instead of a full-width strip.
+    "barFloating": false,
+    // Split the bar into three independent pills (Exo's "separated" style).
+    "barSeparated": false,
+    // Shrink the bar to fit its modules and centre it on its edge.
+    "barCentered": false,
+    // Round the corners facing the screen (Exo's "round" style).
+    "barRound": false,
+    // Vertical bar. Implied by barPosition left/right.
+    "barVertical": false,
+    // Hide the bar completely while a fullscreen window is focused.
+    "barAutoHideFullscreen": false,
+    // Thickness preset: 0 = 40px, 1 = 35px, 2 = 30px, 3 = 25px.
+    "barDensity": 0,
+    // Gap between the bar and the screen edge when floating.
+    "barMargin": 4,
+    // Modules per zone. Available: launcher, workspaces, windowInfo, tasks,
+    // media, tray, statusIcons, battery, clock, quickSettings.
+    "barModulesLeft": ["launcher", "workspaces", "windowInfo"],
+    "barModulesCenter": ["clock"],
+    "barModulesRight": ["media", "statusIcons", "tray", "battery", "quickSettings"],
+
+    // -------------------------------------------------------------- launcher
+    // "grid" or "list".
+    "launcherLayout": "grid",
+    "launcherColumns": 5,
+    // Command used for desktop entries that need a terminal.
+    "launcherTerminal": "kitty",
+    "launcherMaxResults": 60,
+
+    // ---------------------------------------------------------- quick centre
+    "quickShowVolume": true,
+    "quickShowBrightness": true,
+    "quickShowToggles": true,
+    "quickWidth": 400,
+
+    // ------------------------------------------------------------------- osd
+    "osdEnabled": true,
+    "osdTimeout": 2000,
+    // "center", "top", "bottom", "left", "right", "top-left", "top-right",
+    // "bottom-left" or "bottom-right".
+    "osdAnchor": "center",
+    "osdVertical": false,
+
+    // --------------------------------------------------------- notifications
+    "notificationsEnabled": true,
+    // Default timeout for notifications that do not set their own (ms).
+    "notificationsTimeout": 5000,
+    // "top-right", "top-left", "bottom-right" or "bottom-left".
+    "notificationsPosition": "top-right",
+    "notificationsMaxVisible": 3,
+
+    // ----------------------------------------------------------------- theme
+    // "dark" or "light".
+    "themeMode": "dark",
+    // matugen output. Empty means ~/.cache/quickshell-exo/colors.json.
+    "themeColorsPath": "",
+    "themeIconFont": "Material Symbols Rounded",
+    "themeFontFamily": "Inter",
+
+    // ------------------------------------------------------------- x11 extra
+    // How often the wmctrl/xprop fallback polls (ms). Ignored when the compiled
+    // helper (bin/x11-events) is present.
+    "x11PollInterval": 1200,
+    // Set to false to force polling even if the helper was built.
+    "x11EventHelper": true,
+
+    // -------------------------------------------------------------- services
+    "showBattery": true,
+    // Pin a specific UPower device (substring match); empty = display device.
+    "batteryDevice": "",
+    // Force a backlight device; empty = auto-detected from /sys/class/backlight.
+    "brightnessDevice": "",
+    // Maximum width of the focused window title in the bar (px).
+    "windowInfoMaxWidth": 320,
+
+    // ------------------------------------------------------------ power menu
+    "lockCommand": "xflock4",
+    "logoutCommand": "xfce4-session-logout --logout",
+    "suspendCommand": "systemctl suspend",
+    "rebootCommand": "systemctl reboot",
+    "shutdownCommand": "systemctl poweroff",
+
+    // ----------------------------------------------------------------- clock
+    "clockMilitary": false,
+    "clockDayMonthSwapped": false,
+    // Vertical bars: show time above date (true) or date above time (false).
+    "clockSwapVertical": true
+}

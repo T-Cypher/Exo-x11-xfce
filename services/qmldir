@@ -1,0 +1,9 @@
+singleton Theme 1.0 Theme.qml
+singleton Config 1.0 Config.qml
+singleton X11 1.0 X11.qml
+singleton Apps 1.0 Apps.qml
+singleton Pinned 1.0 Pinned.qml
+singleton Osd 1.0 Osd.qml
+singleton Surfaces 1.0 Surfaces.qml
+singleton Notifs 1.0 Notifs.qml
+ExoIpc 1.0 ExoIpc.qml

@@ -1,0 +1,94 @@
+#!/bin/sh
+# Exo for XFCE — command line wrapper.
+#
+# A thin, friendlier front end for the shell's IPC interface, so XFCE keyboard
+# shortcuts and scripts can call things like:
+#
+#     exo toggle-launcher
+#     exo volume-up
+#     exo workspace 3
+#
+# It is equivalent to `qs -c exo ipc call exo <command>`.
+
+SHELL_ID="${EXO_SHELL_ID:-exo}"
+
+if ! command -v qs >/dev/null 2>&1; then
+    echo "exo: quickshell ('qs') was not found in PATH." >&2
+    echo "exo: install it (e.g. 'sudo pacman -S quickshell', 'sudo dnf install quickshell', 'nix profile install nixpkgs#quickshell')" >&2
+    exit 1
+fi
+
+ipc() {
+    # Map kebab-case names onto the camelCase IPC functions.
+    name="$1"
+    shift
+    case "$name" in
+    toggle-launcher) fn="toggleLauncher" ;;
+    open-launcher) fn="openLauncher" ;;
+    toggle-quick-center | toggle-quick-settings) fn="toggleQuickCenter" ;;
+    open-quick-center) fn="openQuickCenter" ;;
+    toggle-power-menu) fn="togglePowerMenu" ;;
+    open-settings | settings) fn="openSettings" ;;
+    close | close-overlay) fn="closeOverlay" ;;
+    toggle-dnd | toggle-do-not-disturb) fn="toggleDnd" ;;
+    volume-up) fn="volumeUp" ;;
+    volume-down) fn="volumeDown" ;;
+    toggle-mute | mute) fn="toggleMute" ;;
+    brightness-up) fn="brightnessUp" ;;
+    brightness-down) fn="brightnessDown" ;;
+    workspace | switch-workspace) fn="switchWorkspace" ;;
+    focus-window) fn="focusWindow" ;;
+    notify) fn="notify" ;;
+    reload) fn="reload" ;;
+    version) fn="version" ;;
+    debug-state | state) fn="debugState" ;;
+    debug-notifs | notifs) fn="debugNotifs" ;;
+    osd-test) fn="osdTest" ;;
+    *)
+        echo "exo: unknown command '$name'" >&2
+        echo >&2
+        echo "available commands:" >&2
+        cat >&2 <<'HELP'
+  toggle-launcher            open/close the application launcher
+  open-launcher              open the application launcher
+  toggle-quick-center        open/close the quick centre
+  toggle-power-menu          open/close the power menu
+  open-settings              open the settings window
+  close                      close whatever overlay is open
+  toggle-dnd                 toggle do-not-disturb
+  volume-up [step]           raise the volume
+  volume-down [step]         lower the volume
+  toggle-mute                mute/unmute
+  brightness-up [step]       raise the screen brightness
+  brightness-down [step]     lower the screen brightness
+  workspace <index>          switch xfwm4 workspace (0 based)
+  focus-window <name>        activate a window by title or class
+  notify "<title>" "<body>"  send a test notification
+  reload                     reload the shell
+  version                    print the shell version
+  state                      print X11 / shell diagnostics
+  notifs                     print the notification stack
+  osd-test [0-1]             show the OSD for testing
+HELP
+        exit 2
+        ;;
+    esac
+
+    if [ "$#" -gt 0 ]; then
+        qs -c "$SHELL_ID" ipc call exo "$fn" "$@"
+    else
+        qs -c "$SHELL_ID" ipc call exo "$fn"
+    fi
+}
+
+case "$1" in
+"") ipc version ;;
+-h | --help | help)
+    ipc help
+    ;;
+*)
+    command="$1"
+    shift
+    ipc "$command" "$@"
+    ;;
+esac
